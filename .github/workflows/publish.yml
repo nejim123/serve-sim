@@ -34,6 +34,12 @@ jobs:
           fetch-depth: 2
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.22.1"
+          registry-url: "https://registry.npmjs.org"
+
       - name: Detect serve-sim changes
         id: changes
         run: |
@@ -63,13 +69,6 @@ jobs:
       - name: Setup bun
         if: steps.changes.outputs.sim == 'true'
         uses: oven-sh/setup-bun@v2
-
-      - name: Setup Node.js
-        if: steps.changes.outputs.sim == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         if: steps.changes.outputs.sim == 'true'
